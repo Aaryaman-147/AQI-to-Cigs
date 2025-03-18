@@ -5,15 +5,15 @@ This tool estimates the number of cigarettes smoked based on the AQI over a spec
 
 - Calculates the equivalent number of cigarettes smoked based on the exposure time
 - User Friendly UI
-- Shows AQI classification (Good, Moderate, Unhealthy, etc.)
+- Shows AQI classification (Good, Satisfactory, Moderate, Unhealthy and Hazardous)
 
 ## AQI Categories
 
-- **Good (0-50) 🟢**: Air quality is considered acceptable, with little to no risk to public health.
+- **Good (0-50) 🟢**: The air quality is deemed acceptable, posing little to no risk to public health.
 - **Satisfactory (51-100) 🟡**: Air quality is acceptable, but sensitive individuals might experience mild discomfort.
 - **Moderate (101-200) 🟠**: Air quality is considered unhealthy for sensitive groups, such as children, the elderly, and people with respiratory or heart conditions.
 - **Unhealthy (201-300) 🟣**: Air quality is considered unhealthy, and all individuals may experience health effects.
-- **Hazardous (301 +) ⚫**: Air quality is considered hazardous, and all individuals may experience serious health effects.
+- **Hazardous (301 +) ⚫**: Air quality is considered hazardous, and everyone may suffer from serious health effects.
 
 ## How it Works
 
