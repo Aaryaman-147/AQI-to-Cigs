@@ -1,5 +1,5 @@
 # AQI to Cigarette Equivalent Calculator
-This simple tool calculates the number of cigarettes smoked equivalent to your exposure to the Air Quality Index over a given duration, providing insight into the health risk comparable to smoking.
+This tool estimates the number of cigarettes smoked based on the AQI over a specified duration, providing insight into the health risks comparable to smoking.
 
 ## Features
 
