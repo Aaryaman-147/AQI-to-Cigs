@@ -30,7 +30,7 @@ This simple web-based tool calculates the number of cigarettes smoked equivalent
 
 ## Contributing
 
-You can fork this repository and contribute by submitting pull requests. If you have any ideas or improvements, don't hesitate to open an issue!
+You can fork this repository and contribute by submitting pull requests. Contributions and feedback are welcome—especially from experienced professionals.
 
 ## License
 
