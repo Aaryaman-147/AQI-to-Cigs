@@ -24,7 +24,7 @@ This tool estimates the number of cigarettes smoked based on the AQI over a spec
 
 ## How to Use
 
-- Enter the AQI value in the given input box.
+- Enter the AQI value in the given input box. (must be less than 500 for the tool to work properly)
 - Input the number of hours exposed.
 - Click the "Calculate" button.
 
