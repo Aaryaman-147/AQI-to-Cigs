@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI to Cigarette Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8e0d4;
+            padding: 20px;
+        }
+
+        .main-ui {
+            background: white;
+            padding: 100px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            transition: all 0.3s ease-in-out;
+        }
+
+        h2 {
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+
+        .main-ui:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 150px;
+            align-items: center;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #hoursInput {
+            width: 150px;
+        }
+
+
+        button {
+            padding: 15px 20px;
+            border: none;
+            background: #1e88e5;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        .footer {
+            font-size: 20px;
+            text-align: center;
+            background-color: #1e88e5;
+            color: #fff;
+            padding: 30px;
+            border-radius: 50px;
+            max-width: 1200px;
+            margin: 20px auto 0;
+        }
+
+        #error-message {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="main-ui">
+        <h2>AQI to Cigarette Calculator</h2>
+        <input type="number" id="aqiInput" placeholder="       Enter AQI value" maxlength="3" oninput="limitInputLength(this)"><br>
+        <input type="number" id="hoursInput" placeholder="Hours Exposed" value="24" maxlength="3" oninput="limitInputLength(this)"><br>
+        <button onclick="calculateCigarettes()">Calculate</button>
+        <p id="result"></p>
+    </div>
+
+    <p class="footer">
+        This tool uses the formula to calculate PM2.5 concentration based on AQI. 
+        The number of cigarettes smoked is derived using the assumption that 22 µg/m³ 
+        of PM2.5 over 24 hours equals smoking one cigarette.
+        <br> Inspired by <a href="https://jasminedevv.github.io/AQI2cigarettes/" target="_blank" style="color: #fff; text-decoration: underline;">Jasminedevv's calculator</a>.
+    </p>
+
+    <script>
+        function limitInputLength(input) {
+    if (input.value.length > 3) {
+        input.value = input.value.slice(0, 3);
+    }
+}
+    function calculateCigarettes() {
+    let aqi = document.getElementById("aqiInput").value.trim();
+    let hours = document.getElementById("hoursInput").value.trim() || 24;
+    let pm25,category;
+
+    if (aqi === "" || hours === "" || isNaN(aqi) || isNaN(hours)) {
+        document.getElementById("result").innerHTML = "<span id='error-message'>Error: Please enter valid numbers only. No letters or symbols.</span>";
+        return;
+    }
+
+    aqi = parseFloat(aqi);
+    hours = parseFloat(hours);
+
+    if (aqi < 0 || aqi > 500) {
+        document.getElementById("result").innerHTML = "<span id='error-message'>Error:</strong> AQI must be between 0 and 500.</span>";
+        return;
+    }
+
+    if (hours < 1 || hours > 168) {
+        document.getElementById("result").innerHTML = "<span id='error-message'>Error:</strong> Hours exposed must be between 1 and 168.</span>";
+        return;
+    }
+
+    if (aqi <= 50) {
+        pm25 = (aqi / 50) * 12;
+    } else if (aqi <= 100) {
+        pm25 = 12 + ((aqi - 50) / 50) * 23.9;
+    } else if (aqi <= 150) {
+        pm25 = 35.5 + ((aqi - 100) / 50) * 54.4;
+    } else if (aqi <= 200) {
+        pm25 = 55.5 + ((aqi - 150) / 50) * 84.9;
+    } else if (aqi <= 300) {
+        pm25 = 150.5 + ((aqi - 200) / 100) * 149.9;
+    } else {
+        pm25 = 250.5 + ((aqi - 300) / 100) * 349.9;
+    }
+
+    if (aqi <= 50) {
+        category = "Good 😊";
+        pm25 = (aqi / 50) * 12;
+    } else if (aqi <= 100) {
+        category = "Satisfactory 😐";
+        pm25 = 12 + ((aqi - 50) / 50) * 23.9;
+    } else if (aqi <= 200) {
+        category = "Moderate 😷";
+        pm25 = 35.5 + ((aqi - 100) / 50) * 54.4;
+    } else if (aqi <= 300) {
+        category = "Unhealthy ⚠️";
+        pm25 = 55.5 + ((aqi - 150) / 50) * 84.9;
+    }
+    else {
+        category = "Hazardous ☠️";
+        pm25 = 250.5 + ((aqi - 300) / 100) * 349.9;
+    }
+
+    let cigarettes = ((pm25 / 22) * (hours / 24)).toFixed(2);
+
+    if (aqi) {
+        document.getElementById("result").innerHTML = `Equivalent to ~${cigarettes} cigarettes/day <br> AQI Category: <strong>${category}</strong>`;
+    } else {
+        document.getElementById("result").innerText = "It looks like you've smoked 0.0 cigarettes";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("result").innerText = "It looks like you've smoked 0.0 cigarettes";
+});
+
+    </script>
+
+</body>
+</html>
